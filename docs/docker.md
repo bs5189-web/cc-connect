@@ -17,6 +17,7 @@ Edit `.env` and `docker/cc-connect/config.toml`:
 - Set `OPENAI_API_KEY`.
 - Set your platform credentials, such as `TELEGRAM_BOT_TOKEN`.
 - Set `CC_CONNECT_WORKSPACE` to the host project directory Codex should edit.
+  The directory must already exist before the container starts.
 - Replace `change-me-bridge-token` and `change-me-management-token`.
 - On Linux, optionally set `CC_CONNECT_UID` and `CC_CONNECT_GID` to `id -u`
   and `id -g` so mounted files stay writable by your host user.
@@ -54,6 +55,18 @@ The sample config sets:
 work_dir = "/workspace"
 codex_home = "/home/ccconnect/.codex"
 ```
+
+If the host path configured by `CC_CONNECT_WORKSPACE` or the container
+`work_dir` does not exist, starting a Codex session can fail with:
+
+```text
+codexSession: start: fork/exec /usr/local/bin/codex: no such file or directory
+```
+
+This message is misleading: the Codex binary may be installed correctly, but Go
+reports `no such file or directory` when it cannot start the process in the
+configured working directory. Create the host directory first, or change
+`work_dir` to an existing path mounted into the container.
 
 ## Ports
 
