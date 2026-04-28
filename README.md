@@ -259,6 +259,10 @@ make build
 ```
 
 **Docker Compose with Codex bundled:** see [docs/docker.md](docs/docker.md).
+Make sure the mounted workspace path exists before starting. If the host path
+configured by `CC_CONNECT_WORKSPACE` or the container `work_dir` is missing,
+Codex may fail with the misleading error
+`codexSession: start: fork/exec /usr/local/bin/codex: no such file or directory`.
 
 
 ### ⚙️ Configure

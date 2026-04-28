@@ -259,6 +259,9 @@ make build
 ```
 
 **Docker Compose（内置 Codex CLI）：** 见 [docs/docker.md](docs/docker.md)。
+启动前请确认挂载的 workspace 路径已存在。如果 `CC_CONNECT_WORKSPACE`
+指向的宿主机目录或容器内 `work_dir` 不存在，Codex 可能会报一个容易误导的错误：
+`codexSession: start: fork/exec /usr/local/bin/codex: no such file or directory`。
 
 
 ### ⚙️ 配置
