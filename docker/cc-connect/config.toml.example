@@ -1,0 +1,53 @@
+# cc-connect Docker configuration.
+# Copy to docker/cc-connect/config.toml and fill in credentials.
+
+language = "zh"
+data_dir = "/home/ccconnect/.cc-connect/data"
+
+[log]
+level = "info"
+
+[bridge]
+enabled = true
+port = 9810
+token = "change-me-bridge-token"
+path = "/bridge/ws"
+cors_origins = ["*"]
+
+[management]
+enabled = true
+port = 9820
+token = "change-me-management-token"
+cors_origins = ["*"]
+
+[[projects]]
+name = "docker-codex"
+
+[projects.agent]
+type = "codex"
+
+[projects.agent.options]
+work_dir = "/workspace"
+codex_home = "/home/ccconnect/.codex"
+mode = "suggest" # "suggest" | "auto-edit" | "full-auto" | "yolo"
+provider = "openai"
+# model = "gpt-5.3-codex"
+# reasoning_effort = "high"
+
+[[projects.agent.providers]]
+name = "openai"
+api_key = "${OPENAI_API_KEY}"
+# base_url = "${OPENAI_BASE_URL}"
+# model = "gpt-5.3-codex"
+
+# Codex writes provider/auth metadata under /home/ccconnect/.codex,
+# which is mounted to docker/codex on the host.
+# [projects.agent.providers.codex]
+# wire_api = "responses"
+
+[[projects.platforms]]
+type = "telegram"
+
+[projects.platforms.options]
+token = "${TELEGRAM_BOT_TOKEN}"
+# allow_from = "${TELEGRAM_ALLOW_FROM}"

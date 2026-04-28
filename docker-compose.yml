@@ -1,0 +1,26 @@
+services:
+  cc-connect:
+    build:
+      context: .
+      args:
+        CODEX_NPM_PACKAGE: ${CODEX_NPM_PACKAGE:-@openai/codex@latest}
+        UID: ${CC_CONNECT_UID:-1000}
+        GID: ${CC_CONNECT_GID:-1000}
+    image: cc-connect:codex
+    container_name: cc-connect
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+      CODEX_HOME: /home/ccconnect/.codex
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_ALLOW_FROM: ${TELEGRAM_ALLOW_FROM:-}
+    volumes:
+      - ./docker/cc-connect:/home/ccconnect/.cc-connect
+      - ./docker/codex:/home/ccconnect/.codex
+      - ${CC_CONNECT_WORKSPACE:-./workspace}:/workspace
+    ports:
+      - "${CC_CONNECT_BRIDGE_PORT:-9810}:9810"
+      - "${CC_CONNECT_MANAGEMENT_PORT:-9820}:9820"
+      - "${CC_CONNECT_WEBHOOK_PORT:-9111}:9111"

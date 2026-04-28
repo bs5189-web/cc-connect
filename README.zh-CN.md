@@ -258,6 +258,8 @@ cd cc-connect
 make build
 ```
 
+**Docker Compose（内置 Codex CLI）：** 见 [docs/docker.md](docs/docker.md)。
+
 
 ### ⚙️ 配置
 

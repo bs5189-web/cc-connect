@@ -258,6 +258,8 @@ cd cc-connect
 make build
 ```
 
+**Docker Compose with Codex bundled:** see [docs/docker.md](docs/docker.md).
+
 
 ### ⚙️ Configure
 
