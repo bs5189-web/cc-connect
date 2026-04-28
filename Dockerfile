@@ -59,6 +59,8 @@ RUN set -eux; \
     chown -R "$UID:$GID" /home/ccconnect /workspace
 
 COPY --from=builder /out/cc-connect /usr/local/bin/cc-connect
+COPY docker/cc-connect/config.toml.example /etc/cc-connect/config.toml
+COPY --chmod=755 docker/entrypoint.sh /usr/local/bin/cc-connect-docker-entrypoint
 
 USER ${UID}:${GID}
 WORKDIR /workspace
@@ -66,5 +68,5 @@ WORKDIR /workspace
 VOLUME ["/home/ccconnect/.cc-connect", "/home/ccconnect/.codex", "/workspace"]
 EXPOSE 9810 9820 9111
 
-ENTRYPOINT ["cc-connect"]
-CMD ["-config", "/home/ccconnect/.cc-connect/config.toml"]
+ENTRYPOINT ["cc-connect-docker-entrypoint"]
+CMD ["cc-connect", "-config", "/home/ccconnect/.cc-connect/config.toml"]
