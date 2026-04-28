@@ -12,6 +12,10 @@ cp docker/cc-connect/config.toml.example docker/cc-connect/config.toml
 mkdir -p workspace docker/codex docker/cc-connect/data
 ```
 
+If `docker/cc-connect/config.toml` is missing, the image seeds this file from
+the bundled Docker template on startup. The seeded project uses the `codex`
+agent by default. Existing mounted configs are never overwritten.
+
 Edit `.env` and `docker/cc-connect/config.toml`:
 
 - Set `OPENAI_API_KEY`.
